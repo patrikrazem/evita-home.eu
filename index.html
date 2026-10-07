@@ -4,15 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>A Home in the Light</title>
-<meta name="description" content="A bright apartment for rent in a newly built residence: open kitchen and living space, bedroom, modern bathroom and a covered terrace with a view.">
+<meta name="description" content="A bright apartment for rent in a newly built residence: open kitchen and living space, bedroom, modern bathroom, a covered terrace with a view, private garden and garage parking.">
 <meta property="og:type" content="website">
 <meta property="og:title" content="A Home in the Light">
-<meta property="og:description" content="A bright apartment for rent in a newly built residence: open kitchen and living space, bedroom, modern bathroom and a covered terrace with a view.">
+<meta property="og:description" content="A bright apartment for rent in a newly built residence: open kitchen and living space, bedroom, modern bathroom, a covered terrace with a view, private garden and garage parking.">
 <meta property="og:image" content="media/film.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <style>img{max-width:100%}[hidden]{display:none!important}body{margin:0}</style>
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Hanken+Grotesk:wght@400;500;600&display=swap">
@@ -59,6 +57,10 @@ body {
 }
 .bar b { font-family: var(--display); font-weight: 400; font-size: 20px; letter-spacing: .01em; text-transform: none; color: var(--ink); }
 .bar b i { font-weight: 300; }
+.bar-links { display: flex; gap: clamp(14px, 3vw, 32px); align-items: baseline; }
+.bar-links a { color: var(--ink); text-decoration: none; border-bottom: 1px solid transparent; transition: border-color .2s; }
+.bar-links a:hover, .bar-links a:focus-visible { border-color: var(--oak); outline: none; }
+@media (max-width: 520px) { .bar-links span { display: none; } }
 
 /* hero */
 .hero {
@@ -138,6 +140,66 @@ h1 em { display: block; font-style: italic; padding-left: .6em; }
 .detail-clip video { width: 100%; height: 100%; object-fit: cover; display: block; }
 .detail p { margin: 0; font-size: 15px; min-width: 0; }
 
+/* floor plan */
+.plan { padding-block: clamp(40px, 7vw, 88px) 0; }
+.plan-grid {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 360px);
+  gap: clamp(28px, 6vw, 96px); align-items: start;
+  padding-block: clamp(28px, 4vw, 48px) clamp(40px, 7vw, 88px);
+  border-bottom: 1px solid var(--line);
+}
+.plan-fig { margin: 0; min-width: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: clamp(12px, 3vw, 36px); }
+.plan-svg { display: block; width: 100%; height: auto; max-height: 82vh; margin-inline: auto; }
+.plan-fig figcaption { margin-top: 14px; font-size: 13px; color: var(--muted); }
+.schedule { min-width: 0; }
+.schedule table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+.schedule th { text-align: left; font-size: 11px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--oak); padding: 0 0 10px; }
+.schedule th:last-child, .schedule td:last-child { text-align: right; }
+.schedule td { padding: 12px 0; border-top: 1px solid var(--line); font-size: 15px; }
+.schedule td:last-child { font-family: var(--display); font-size: 21px; line-height: 1; }
+.schedule tr[data-room] { cursor: default; transition: color .2s; }
+.schedule tr[data-room]:hover, .schedule tr[data-room]:focus-visible, .schedule tr.is-on { color: var(--oak); outline: none; }
+.schedule tr.aside-row td { color: var(--muted); }
+.schedule tr.total td { border-top: 1px solid var(--ink); font-weight: 600; }
+.schedule tr.subtotal td { border-top: 1px solid var(--ink); font-weight: 600; padding-bottom: 20px; }
+.plan-notes { list-style: none; padding: 0; margin: 28px 0 0; display: grid; gap: 10px; font-size: 14px; color: var(--muted); }
+.plan-notes li { padding-left: 18px; position: relative; }
+.plan-notes li::before { content: ""; position: absolute; left: 0; top: .7em; width: 8px; height: 1px; background: var(--oak); }
+
+/* plan drawing */
+.p-wall { fill: var(--ink); }
+.p-room { fill: var(--bg); }
+.p-bath { fill: url(#p-tiles); }
+.room-shape { transition: fill .25s; }
+.room-shape.is-on { fill: color-mix(in srgb, var(--oak) 22%, var(--bg)); }
+.p-tl { fill: none; stroke: var(--line); stroke-width: 1; }
+.p-gravel { fill: url(#p-grav); }
+.p-gravel.is-on { fill: color-mix(in srgb, var(--oak) 18%, var(--surface)); }
+.p-tile.is-on { fill: color-mix(in srgb, var(--oak) 26%, var(--surface)); }
+.p-dot { fill: var(--muted); opacity: .45; }
+.p-tile { fill: var(--surface); }
+.p-joint { stroke: var(--line); stroke-width: 1.4; }
+.p-edge { fill: none; stroke: var(--muted); stroke-width: 1.4; stroke-dasharray: 9 6; }
+.p-fence { fill: none; stroke: var(--muted); stroke-width: 1.4; stroke-dasharray: 3 5; }
+.p-post { fill: var(--ink); }
+.p-planter { fill: color-mix(in srgb, var(--oak) 16%, transparent); stroke: var(--oak); stroke-width: 1.6; }
+.p-shrub { fill: none; stroke: var(--oak); stroke-width: 1.2; }
+.p-shrub-l { stroke: var(--oak); stroke-width: .9; opacity: .7; }
+.p-fx { fill: none; stroke: var(--muted); stroke-width: 1.3; }
+.p-ff { fill: var(--surface); stroke: var(--muted); stroke-width: 1.3; }
+.p-leaf { stroke: var(--ink); stroke-width: 2.6; }
+.p-swing { fill: none; stroke: var(--muted); stroke-width: 1.2; stroke-dasharray: 4 4; }
+.p-glass { stroke: var(--oak); stroke-width: 1.6; }
+.p-arrow { fill: none; stroke: var(--oak); stroke-width: 2; }
+.p-ahead { fill: var(--oak); }
+.p-name { font: 600 17px var(--body); letter-spacing: .16em; fill: var(--ink); }
+.p-name-s { font: 600 14px var(--body); letter-spacing: .14em; fill: var(--ink); }
+.p-area { font: 400 26px var(--display); fill: var(--oak); }
+.p-sub { font: 500 12px var(--body); letter-spacing: .2em; fill: var(--muted); }
+.p-tiny { font: 500 11px var(--body); letter-spacing: .06em; fill: var(--muted); }
+.p-sbar { fill: var(--ink); }
+.p-sbar.alt { fill: var(--surface); stroke: var(--ink); stroke-width: 1; }
+
 /* close */
 .close { text-align: center; padding-block: clamp(64px, 10vw, 140px); }
 .close h2 { font-family: var(--display); font-weight: 300; font-size: clamp(48px, 8vw, 104px); line-height: .95; margin: 18px 0 24px; }
@@ -147,7 +209,8 @@ h1 em { display: block; font-style: italic; padding-left: .6em; }
 footer { border-top: 1px solid var(--line); padding-block: 22px 32px; font-size: 12px; color: var(--muted); letter-spacing: .08em; }
 
 @media (max-width: 820px) {
-  .hero, .room, .room:nth-of-type(even) { grid-template-columns: minmax(0, 1fr); }
+  .hero, .room, .room:nth-of-type(even), .plan-grid { grid-template-columns: minmax(0, 1fr); }
+  .plan-svg { max-height: none; }
   .room:nth-of-type(even) .clip { order: 0; }
   .film, .clip { width: min(100%, 420px); }
   .hero .film { order: -1; margin-inline: auto; }
@@ -164,14 +227,14 @@ footer { border-top: 1px solid var(--line); padding-block: 22px 32px; font-size:
 <div class="wrap">
   <header class="bar">
     <b>A Home <i>in the Light</i></b>
-    <span>For rent</span>
+    <nav class="bar-links"><a href="#tour">Tour</a><a href="#floor-plan">Floor plan</a><span>For rent</span></nav>
   </header>
 
   <section class="hero">
     <div>
       <div class="eyebrow">Apartment for rent</div>
       <h1>A Home <em>in the Light</em></h1>
-      <p class="lede">A bright apartment in a newly built residence, with oak floors throughout, an open kitchen and living space, a calm bedroom, a modern bathroom and a covered terrace that looks out over the hills.</p>
+      <p class="lede">A bright apartment in a newly built residence, with oak floors throughout, an open kitchen and living space, a calm bedroom, a modern bathroom and a covered terrace that looks out over the hills. A garage parking space comes with it.</p>
       <div class="actions">
         <button class="btn" id="play-film" type="button"><svg viewBox="0 0 10 12" aria-hidden="true"><path d="M0 0l10 6-10 6z"/></svg>Watch the film</button>
         <a class="btn ghost" href="#tour">Take the tour</a>
@@ -291,10 +354,332 @@ footer { border-top: 1px solid var(--line); padding-block: 22px 32px; font-size:
     </article>
   </section>
 
+  <section id="floor-plan" class="plan">
+    <div class="tour-head">
+      <h2>The floor plan</h2>
+      <p>Apartment D.3 · ground floor with terrace</p>
+    </div>
+    <div class="plan-grid">
+      <figure class="plan-fig">
+<svg class="plan-svg" viewBox="130 196 935 1250" role="img" aria-labelledby="plan-title plan-desc" xmlns="http://www.w3.org/2000/svg">
+<title id="plan-title">Floor plan of apartment D.3</title>
+<desc id="plan-desc">Bedroom and second room on the left, bathroom and hall in between, an open kitchen, dining and living space on the right with the entrance at the top right. Three glazed doors open from the second room and living room onto a large terrace with a covered tiled area, gravel garden and planters.</desc>
+<defs>
+<pattern id="p-grav" width="12" height="12" patternUnits="userSpaceOnUse"><circle cx="3" cy="3" r="1.3" class="p-dot"/><circle cx="9" cy="8" r="1.1" class="p-dot"/><circle cx="10" cy="2" r=".7" class="p-dot"/></pattern>
+<pattern id="p-tiles" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0H0V16" class="p-tl"/></pattern>
+<marker id="p-ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0L10 5L0 10z" class="p-ahead"/></marker>
+</defs>
+<path d="M196 857 L196 1282 L250 1360 L1051 1360 L1051 857 Z" class="p-gravel room-shape" data-room="garden"/>
+<rect x="285" y="857" width="560" height="153" class="p-tile room-shape" data-room="covered"/>
+<line x1="285" y1="857" x2="285" y2="1010" class="p-joint"/>
+<line x1="332" y1="857" x2="332" y2="1010" class="p-joint"/>
+<line x1="379" y1="857" x2="379" y2="1010" class="p-joint"/>
+<line x1="426" y1="857" x2="426" y2="1010" class="p-joint"/>
+<line x1="473" y1="857" x2="473" y2="1010" class="p-joint"/>
+<line x1="520" y1="857" x2="520" y2="1010" class="p-joint"/>
+<line x1="567" y1="857" x2="567" y2="1010" class="p-joint"/>
+<line x1="614" y1="857" x2="614" y2="1010" class="p-joint"/>
+<line x1="661" y1="857" x2="661" y2="1010" class="p-joint"/>
+<line x1="708" y1="857" x2="708" y2="1010" class="p-joint"/>
+<line x1="755" y1="857" x2="755" y2="1010" class="p-joint"/>
+<line x1="802" y1="857" x2="802" y2="1010" class="p-joint"/>
+<line x1="285" y1="904" x2="845" y2="904" class="p-joint"/>
+<line x1="285" y1="951" x2="845" y2="951" class="p-joint"/>
+<line x1="285" y1="998" x2="845" y2="998" class="p-joint"/>
+<path d="M285 857 V1010 H845 V857" class="p-edge"/>
+<path d="M212 860 V1276 L262 1345 H1036 V872" class="p-fence"/>
+<rect x="1035" y="1158" width="13" height="16" class="p-post"/>
+<rect x="205" y="860" width="55" height="150" class="p-planter"/>
+<circle cx="232" cy="885" r="19" class="p-shrub"/>
+<line x1="232" y1="885" x2="249.0" y2="885.0" class="p-shrub-l"/>
+<line x1="232" y1="885" x2="244.0" y2="897.0" class="p-shrub-l"/>
+<line x1="232" y1="885" x2="232.0" y2="902.0" class="p-shrub-l"/>
+<line x1="232" y1="885" x2="220.0" y2="897.0" class="p-shrub-l"/>
+<line x1="232" y1="885" x2="215.0" y2="885.0" class="p-shrub-l"/>
+<line x1="232" y1="885" x2="220.0" y2="873.0" class="p-shrub-l"/>
+<line x1="232" y1="885" x2="232.0" y2="868.0" class="p-shrub-l"/>
+<line x1="232" y1="885" x2="244.0" y2="873.0" class="p-shrub-l"/>
+<circle cx="232" cy="935" r="19" class="p-shrub"/>
+<line x1="232" y1="935" x2="249.0" y2="935.0" class="p-shrub-l"/>
+<line x1="232" y1="935" x2="244.0" y2="947.0" class="p-shrub-l"/>
+<line x1="232" y1="935" x2="232.0" y2="952.0" class="p-shrub-l"/>
+<line x1="232" y1="935" x2="220.0" y2="947.0" class="p-shrub-l"/>
+<line x1="232" y1="935" x2="215.0" y2="935.0" class="p-shrub-l"/>
+<line x1="232" y1="935" x2="220.0" y2="923.0" class="p-shrub-l"/>
+<line x1="232" y1="935" x2="232.0" y2="918.0" class="p-shrub-l"/>
+<line x1="232" y1="935" x2="244.0" y2="923.0" class="p-shrub-l"/>
+<circle cx="232" cy="985" r="19" class="p-shrub"/>
+<line x1="232" y1="985" x2="249.0" y2="985.0" class="p-shrub-l"/>
+<line x1="232" y1="985" x2="244.0" y2="997.0" class="p-shrub-l"/>
+<line x1="232" y1="985" x2="232.0" y2="1002.0" class="p-shrub-l"/>
+<line x1="232" y1="985" x2="220.0" y2="997.0" class="p-shrub-l"/>
+<line x1="232" y1="985" x2="215.0" y2="985.0" class="p-shrub-l"/>
+<line x1="232" y1="985" x2="220.0" y2="973.0" class="p-shrub-l"/>
+<line x1="232" y1="985" x2="232.0" y2="968.0" class="p-shrub-l"/>
+<line x1="232" y1="985" x2="244.0" y2="973.0" class="p-shrub-l"/>
+<rect x="272" y="1288" width="156" height="44" class="p-planter"/>
+<circle cx="300" cy="1310" r="19" class="p-shrub"/>
+<line x1="300" y1="1310" x2="317.0" y2="1310.0" class="p-shrub-l"/>
+<line x1="300" y1="1310" x2="312.0" y2="1322.0" class="p-shrub-l"/>
+<line x1="300" y1="1310" x2="300.0" y2="1327.0" class="p-shrub-l"/>
+<line x1="300" y1="1310" x2="288.0" y2="1322.0" class="p-shrub-l"/>
+<line x1="300" y1="1310" x2="283.0" y2="1310.0" class="p-shrub-l"/>
+<line x1="300" y1="1310" x2="288.0" y2="1298.0" class="p-shrub-l"/>
+<line x1="300" y1="1310" x2="300.0" y2="1293.0" class="p-shrub-l"/>
+<line x1="300" y1="1310" x2="312.0" y2="1298.0" class="p-shrub-l"/>
+<circle cx="350" cy="1310" r="19" class="p-shrub"/>
+<line x1="350" y1="1310" x2="367.0" y2="1310.0" class="p-shrub-l"/>
+<line x1="350" y1="1310" x2="362.0" y2="1322.0" class="p-shrub-l"/>
+<line x1="350" y1="1310" x2="350.0" y2="1327.0" class="p-shrub-l"/>
+<line x1="350" y1="1310" x2="338.0" y2="1322.0" class="p-shrub-l"/>
+<line x1="350" y1="1310" x2="333.0" y2="1310.0" class="p-shrub-l"/>
+<line x1="350" y1="1310" x2="338.0" y2="1298.0" class="p-shrub-l"/>
+<line x1="350" y1="1310" x2="350.0" y2="1293.0" class="p-shrub-l"/>
+<line x1="350" y1="1310" x2="362.0" y2="1298.0" class="p-shrub-l"/>
+<circle cx="400" cy="1310" r="16" class="p-shrub"/>
+<rect x="625" y="1288" width="155" height="44" class="p-planter"/>
+<circle cx="655" cy="1310" r="19" class="p-shrub"/>
+<line x1="655" y1="1310" x2="672.0" y2="1310.0" class="p-shrub-l"/>
+<line x1="655" y1="1310" x2="667.0" y2="1322.0" class="p-shrub-l"/>
+<line x1="655" y1="1310" x2="655.0" y2="1327.0" class="p-shrub-l"/>
+<line x1="655" y1="1310" x2="643.0" y2="1322.0" class="p-shrub-l"/>
+<line x1="655" y1="1310" x2="638.0" y2="1310.0" class="p-shrub-l"/>
+<line x1="655" y1="1310" x2="643.0" y2="1298.0" class="p-shrub-l"/>
+<line x1="655" y1="1310" x2="655.0" y2="1293.0" class="p-shrub-l"/>
+<line x1="655" y1="1310" x2="667.0" y2="1298.0" class="p-shrub-l"/>
+<circle cx="705" cy="1310" r="19" class="p-shrub"/>
+<line x1="705" y1="1310" x2="722.0" y2="1310.0" class="p-shrub-l"/>
+<line x1="705" y1="1310" x2="717.0" y2="1322.0" class="p-shrub-l"/>
+<line x1="705" y1="1310" x2="705.0" y2="1327.0" class="p-shrub-l"/>
+<line x1="705" y1="1310" x2="693.0" y2="1322.0" class="p-shrub-l"/>
+<line x1="705" y1="1310" x2="688.0" y2="1310.0" class="p-shrub-l"/>
+<line x1="705" y1="1310" x2="693.0" y2="1298.0" class="p-shrub-l"/>
+<line x1="705" y1="1310" x2="705.0" y2="1293.0" class="p-shrub-l"/>
+<line x1="705" y1="1310" x2="717.0" y2="1298.0" class="p-shrub-l"/>
+<circle cx="755" cy="1310" r="19" class="p-shrub"/>
+<line x1="755" y1="1310" x2="772.0" y2="1310.0" class="p-shrub-l"/>
+<line x1="755" y1="1310" x2="767.0" y2="1322.0" class="p-shrub-l"/>
+<line x1="755" y1="1310" x2="755.0" y2="1327.0" class="p-shrub-l"/>
+<line x1="755" y1="1310" x2="743.0" y2="1322.0" class="p-shrub-l"/>
+<line x1="755" y1="1310" x2="738.0" y2="1310.0" class="p-shrub-l"/>
+<line x1="755" y1="1310" x2="743.0" y2="1298.0" class="p-shrub-l"/>
+<line x1="755" y1="1310" x2="755.0" y2="1293.0" class="p-shrub-l"/>
+<line x1="755" y1="1310" x2="767.0" y2="1298.0" class="p-shrub-l"/>
+<rect x="998" y="1178" width="47" height="152" class="p-planter"/>
+<circle cx="1021" cy="1205" r="19" class="p-shrub"/>
+<line x1="1021" y1="1205" x2="1038.0" y2="1205.0" class="p-shrub-l"/>
+<line x1="1021" y1="1205" x2="1033.0" y2="1217.0" class="p-shrub-l"/>
+<line x1="1021" y1="1205" x2="1021.0" y2="1222.0" class="p-shrub-l"/>
+<line x1="1021" y1="1205" x2="1009.0" y2="1217.0" class="p-shrub-l"/>
+<line x1="1021" y1="1205" x2="1004.0" y2="1205.0" class="p-shrub-l"/>
+<line x1="1021" y1="1205" x2="1009.0" y2="1193.0" class="p-shrub-l"/>
+<line x1="1021" y1="1205" x2="1021.0" y2="1188.0" class="p-shrub-l"/>
+<line x1="1021" y1="1205" x2="1033.0" y2="1193.0" class="p-shrub-l"/>
+<circle cx="1021" cy="1255" r="19" class="p-shrub"/>
+<line x1="1021" y1="1255" x2="1038.0" y2="1255.0" class="p-shrub-l"/>
+<line x1="1021" y1="1255" x2="1033.0" y2="1267.0" class="p-shrub-l"/>
+<line x1="1021" y1="1255" x2="1021.0" y2="1272.0" class="p-shrub-l"/>
+<line x1="1021" y1="1255" x2="1009.0" y2="1267.0" class="p-shrub-l"/>
+<line x1="1021" y1="1255" x2="1004.0" y2="1255.0" class="p-shrub-l"/>
+<line x1="1021" y1="1255" x2="1009.0" y2="1243.0" class="p-shrub-l"/>
+<line x1="1021" y1="1255" x2="1021.0" y2="1238.0" class="p-shrub-l"/>
+<line x1="1021" y1="1255" x2="1033.0" y2="1243.0" class="p-shrub-l"/>
+<circle cx="1021" cy="1305" r="19" class="p-shrub"/>
+<line x1="1021" y1="1305" x2="1038.0" y2="1305.0" class="p-shrub-l"/>
+<line x1="1021" y1="1305" x2="1033.0" y2="1317.0" class="p-shrub-l"/>
+<line x1="1021" y1="1305" x2="1021.0" y2="1322.0" class="p-shrub-l"/>
+<line x1="1021" y1="1305" x2="1009.0" y2="1317.0" class="p-shrub-l"/>
+<line x1="1021" y1="1305" x2="1004.0" y2="1305.0" class="p-shrub-l"/>
+<line x1="1021" y1="1305" x2="1009.0" y2="1293.0" class="p-shrub-l"/>
+<line x1="1021" y1="1305" x2="1021.0" y2="1288.0" class="p-shrub-l"/>
+<line x1="1021" y1="1305" x2="1033.0" y2="1293.0" class="p-shrub-l"/>
+<rect x="179" y="316" width="259" height="315" class="p-room room-shape" data-room="bedroom"/>
+<rect x="448" y="316" width="131" height="209" class="p-bath room-shape" data-room="bathroom"/>
+<rect x="885" y="316" width="140" height="208" class="p-room room-shape" data-room="hall"/>
+<path d="M612 316 H869 V524 H1025 V822 H612 V625 H454 V544 H612 Z" class="p-room room-shape" data-room="living"/>
+<rect x="179" y="641" width="416" height="181" class="p-room room-shape" data-room="second"/>
+<rect x="140" y="288" width="803" height="28" class="p-wall"/>
+<rect x="1008" y="288" width="44" height="28" class="p-wall"/>
+<rect x="140" y="316" width="39" height="173" class="p-wall"/>
+<rect x="140" y="567" width="39" height="255" class="p-wall"/>
+<rect x="1025" y="316" width="27" height="506" class="p-wall"/>
+<rect x="140" y="822" width="280" height="35" class="p-wall"/>
+<rect x="533" y="822" width="85" height="35" class="p-wall"/>
+<rect x="699" y="822" width="77" height="35" class="p-wall"/>
+<rect x="967" y="822" width="85" height="35" class="p-wall"/>
+<rect x="438" y="316" width="10" height="214" class="p-wall"/>
+<rect x="438" y="530" width="16" height="18" class="p-wall"/>
+<rect x="440" y="619" width="14" height="12" class="p-wall"/>
+<rect x="579" y="316" width="33" height="228" class="p-wall"/>
+<rect x="520" y="525" width="92" height="19" class="p-wall"/>
+<rect x="869" y="316" width="16" height="208" class="p-wall"/>
+<rect x="140" y="631" width="314" height="10" class="p-wall"/>
+<rect x="525" y="625" width="87" height="16" class="p-wall"/>
+<rect x="595" y="641" width="17" height="181" class="p-wall"/>
+<rect x="937" y="231" width="6" height="57" class="p-wall"/>
+<rect x="1008" y="231" width="6" height="57" class="p-wall"/>
+<rect x="937" y="231" width="77" height="6" class="p-wall"/>
+<line x1="420" y1="836" x2="533" y2="836" class="p-glass"/>
+<line x1="420" y1="842" x2="533" y2="842" class="p-glass"/>
+<line x1="618" y1="836" x2="699" y2="836" class="p-glass"/>
+<line x1="618" y1="842" x2="699" y2="842" class="p-glass"/>
+<line x1="776" y1="836" x2="967" y2="836" class="p-glass"/>
+<line x1="776" y1="842" x2="967" y2="842" class="p-glass"/>
+<line x1="862" y1="822" x2="862" y2="857" class="p-fx"/>
+<line x1="159" y1="489" x2="159" y2="567" class="p-glass"/>
+<line x1="165" y1="489" x2="165" y2="567" class="p-glass"/>
+<path d="M179 489 L205 560" class="p-swing"/>
+<line x1="1008" y1="316" x2="1008" y2="381" class="p-leaf"/>
+<path d="M1008 381 A65.0 65.0 0 0 1 943 316" class="p-swing"/>
+<line x1="456" y1="530" x2="456" y2="466" class="p-leaf"/>
+<path d="M456 466 A64.0 64.0 0 0 1 520 530" class="p-swing"/>
+<line x1="443" y1="614" x2="378" y2="614" class="p-leaf"/>
+<path d="M378 614 A65.0 65.0 0 0 1 443 549" class="p-swing"/>
+<line x1="521" y1="641" x2="521" y2="706" class="p-leaf"/>
+<path d="M521 706 A65.0 65.0 0 0 1 456 641" class="p-swing"/>
+<line x1="505" y1="822" x2="505" y2="742" class="p-leaf"/>
+<path d="M505 742 A80.0 80.0 0 0 0 425 822" class="p-swing"/>
+<line x1="697" y1="822" x2="697" y2="748" class="p-leaf"/>
+<path d="M697 748 A74.0 74.0 0 0 0 623 822" class="p-swing"/>
+<line x1="858" y1="822" x2="858" y2="745" class="p-leaf"/>
+<path d="M858 745 A77.0 77.0 0 0 0 781 822" class="p-swing"/>
+<rect x="195" y="318" width="30" height="20" class="p-fx"/>
+<rect x="381" y="318" width="30" height="20" class="p-fx"/>
+<rect x="230" y="320" width="142" height="155" class="p-ff"/>
+<rect x="236" y="324" width="62" height="28" class="p-fx"/>
+<rect x="304" y="324" width="62" height="28" class="p-fx"/>
+<line x1="230" y1="360" x2="372" y2="360" class="p-fx"/>
+<rect x="182" y="576" width="158" height="52" class="p-ff"/>
+<line x1="262" y1="582" x2="256" y2="622" class="p-fx"/>
+<line x1="274" y1="582" x2="268" y2="622" class="p-fx"/>
+<line x1="286" y1="582" x2="280" y2="622" class="p-fx"/>
+<line x1="298" y1="582" x2="292" y2="622" class="p-fx"/>
+<line x1="310" y1="582" x2="304" y2="622" class="p-fx"/>
+<line x1="322" y1="582" x2="316" y2="622" class="p-fx"/>
+<line x1="334" y1="582" x2="328" y2="622" class="p-fx"/>
+<rect x="450" y="318" width="48" height="44" class="p-fx"/>
+<circle cx="474" cy="340" r="13" class="p-fx"/>
+<text x="474" y="380" class="p-tiny" text-anchor="middle">washer</text>
+<rect x="500" y="318" width="78" height="70" class="p-fx"/>
+<line x1="500" y1="318" x2="578" y2="388" class="p-fx"/>
+<line x1="578" y1="318" x2="500" y2="388" class="p-fx"/>
+<path d="M540 400 h30 a5 5 0 0 1 5 5 v20 a15 15 0 0 1 -35 0 v-20 a5 5 0 0 1 0 0 Z" class="p-fx"/>
+<rect x="545" y="460" width="32" height="45" class="p-fx"/>
+<path d="M552 470 h18 v26 h-18 z" class="p-fx"/>
+<rect x="612" y="318" width="256" height="44" class="p-ff"/>
+<rect x="822" y="362" width="46" height="158" class="p-ff"/>
+<rect x="675" y="321" width="45" height="37" class="p-fx"/>
+<circle cx="686" cy="331" r="7" class="p-fx"/>
+<circle cx="709" cy="331" r="7" class="p-fx"/>
+<circle cx="686" cy="348" r="7" class="p-fx"/>
+<circle cx="709" cy="348" r="7" class="p-fx"/>
+<rect x="830" y="384" width="30" height="56" class="p-fx"/>
+<rect x="834" y="390" width="22" height="22" class="p-fx"/>
+<rect x="834" y="416" width="22" height="20" class="p-fx"/>
+<line x1="822" y1="462" x2="868" y2="462" class="p-fx"/>
+<text x="845" y="498" class="p-tiny" text-anchor="middle">fridge</text>
+<rect x="612" y="435" width="116" height="70" class="p-ff"/>
+<rect x="888" y="318" width="49" height="142" class="p-ff"/>
+<line x1="892" y1="360" x2="933" y2="352" class="p-fx"/>
+<line x1="892" y1="372" x2="933" y2="364" class="p-fx"/>
+<line x1="892" y1="384" x2="933" y2="376" class="p-fx"/>
+<line x1="892" y1="396" x2="933" y2="388" class="p-fx"/>
+<line x1="892" y1="408" x2="933" y2="400" class="p-fx"/>
+<line x1="892" y1="420" x2="933" y2="412" class="p-fx"/>
+<line x1="892" y1="432" x2="933" y2="424" class="p-fx"/>
+<line x1="892" y1="444" x2="933" y2="436" class="p-fx"/>
+<rect x="888" y="463" width="49" height="52" class="p-fx"/>
+<text x="912" y="486" class="p-tiny" text-anchor="middle">heat</text>
+<text x="912" y="500" class="p-tiny" text-anchor="middle">pump</text>
+<rect x="828" y="527" width="100" height="6" class="p-ff"/>
+<rect x="660" y="625" width="62" height="135" class="p-ff"/>
+<rect x="645" y="632" width="13" height="34" class="p-fx"/>
+<rect x="724" y="632" width="13" height="34" class="p-fx"/>
+<rect x="645" y="676" width="13" height="34" class="p-fx"/>
+<rect x="724" y="676" width="13" height="34" class="p-fx"/>
+<rect x="645" y="720" width="13" height="34" class="p-fx"/>
+<rect x="724" y="720" width="13" height="34" class="p-fx"/>
+<rect x="952" y="635" width="68" height="170" class="p-ff"/>
+<line x1="1004" y1="635" x2="1004" y2="805" class="p-fx"/>
+<line x1="952" y1="692" x2="1004" y2="692" class="p-fx"/>
+<line x1="952" y1="748" x2="1004" y2="748" class="p-fx"/>
+<rect x="902" y="738" width="48" height="52" class="p-ff"/>
+<rect x="886" y="650" width="42" height="65" class="p-fx"/>
+<rect x="182" y="643" width="71" height="12" class="p-fx"/>
+<rect x="185" y="662" width="67" height="150" class="p-ff"/>
+<rect x="190" y="668" width="57" height="24" class="p-fx"/>
+<path d="M222 712 L252 712 L252 742" class="p-fx"/>
+<rect x="548" y="641" width="45" height="81" class="p-ff"/>
+<line x1="552" y1="652" x2="589" y2="644" class="p-fx"/>
+<line x1="552" y1="664" x2="589" y2="656" class="p-fx"/>
+<line x1="552" y1="676" x2="589" y2="668" class="p-fx"/>
+<line x1="552" y1="688" x2="589" y2="680" class="p-fx"/>
+<line x1="552" y1="700" x2="589" y2="692" class="p-fx"/>
+<line x1="552" y1="712" x2="589" y2="704" class="p-fx"/>
+<rect x="548" y="725" width="45" height="93" class="p-ff"/>
+<line x1="548" y1="771" x2="593" y2="771" class="p-fx"/>
+<text x="308" y="530" class="p-name" text-anchor="middle">BEDROOM</text>
+<text x="308" y="560" class="p-area" text-anchor="middle">13.1 m²</text>
+<text x="514" y="438" class="p-name-s" text-anchor="middle">BATH</text>
+<text x="514" y="468" class="p-area" text-anchor="middle">4.4 m²</text>
+<text x="978" y="395" class="p-name-s" text-anchor="middle">HALL</text>
+<text x="978" y="425" class="p-area" text-anchor="middle">4.6 m²</text>
+<text x="812" y="590" class="p-name" text-anchor="middle">LIVING · DINING</text>
+<text x="812" y="620" class="p-area" text-anchor="middle">30.5 m²</text>
+<text x="745" y="412" class="p-sub" text-anchor="middle">KITCHEN</text>
+<text x="385" y="742" class="p-name" text-anchor="middle">SECOND ROOM</text>
+<text x="385" y="772" class="p-area" text-anchor="middle">12.1 m²</text>
+<text x="620" y="1150" class="p-name" text-anchor="middle">GARDEN</text>
+<text x="620" y="1180" class="p-area" text-anchor="middle">48.1 m²</text>
+<text x="565" y="922" class="p-name-s" text-anchor="middle">COVERED TERRACE</text>
+<text x="565" y="952" class="p-area" text-anchor="middle">14.2 m²</text>
+<text x="975" y="220" class="p-sub" text-anchor="middle">ENTRY</text>
+<path d="M975 244 v22" class="p-arrow" marker-end="url(#p-ah)"/>
+<rect x="196.0" y="1402" width="79.0" height="8" class="p-sbar"/>
+<rect x="275.0" y="1402" width="79.0" height="8" class="p-sbar alt"/>
+<rect x="354.0" y="1402" width="79.0" height="8" class="p-sbar"/>
+<rect x="433.0" y="1402" width="79.0" height="8" class="p-sbar alt"/>
+<text x="196.0" y="1432" class="p-tiny" text-anchor="middle">0</text>
+<text x="275.0" y="1432" class="p-tiny" text-anchor="middle">1</text>
+<text x="354.0" y="1432" class="p-tiny" text-anchor="middle">2</text>
+<text x="433.0" y="1432" class="p-tiny" text-anchor="middle">3</text>
+<text x="512.0" y="1432" class="p-tiny" text-anchor="middle">4</text>
+<text x="534.0" y="1432" class="p-tiny" text-anchor="middle">m</text>
+</svg>
+        <figcaption>Traced from the developer's plan. Point at a room in the list to find it on the plan.</figcaption>
+      </figure>
+      <div class="schedule">
+        <table>
+          <thead><tr><th scope="col">Room</th><th scope="col">Area</th></tr></thead>
+          <tbody>
+            <tr data-room="living" tabindex="0"><td>Living · dining · kitchen</td><td>30.5 m²</td></tr>
+            <tr data-room="bedroom" tabindex="0"><td>Bedroom</td><td>13.1 m²</td></tr>
+            <tr data-room="second" tabindex="0"><td>Second room</td><td>12.1 m²</td></tr>
+            <tr data-room="hall" tabindex="0"><td>Entrance hall</td><td>4.6 m²</td></tr>
+            <tr data-room="bathroom" tabindex="0"><td>Bathroom</td><td>4.4 m²</td></tr>
+            <tr data-room="covered" tabindex="0"><td>Covered terrace</td><td>14.2 m²</td></tr>
+            <tr class="subtotal"><td>Apartment with covered terrace</td><td>78.9 m²</td></tr>
+            <tr data-room="garden" tabindex="0"><td>Private fenced garden</td><td>48.1 m²</td></tr>
+            <tr><td>Covered parking space</td><td>13.4 m²</td></tr>
+            <tr><td>Cellar storage room</td><td>4.2 m²</td></tr>
+            <tr class="total"><td>Total</td><td>144.6 m²</td></tr>
+          </tbody>
+        </table>
+        <ul class="plan-notes">
+          <li>A covered parking space in the building's garage and a private cellar storage room, both one level below the apartment.</li>
+          <li>Three glazed doors open onto the terrace, two from the living room and one from the second room.</li>
+          <li>Built-in wardrobes in the entrance hall, bedroom and second room.</li>
+          <li>Space for a washing machine in the bathroom.</li>
+          <li>Heat pump unit in the entrance hall.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
   <section class="close">
     <div class="eyebrow">Available now</div>
     <h2>A Home <em>in the Light</em></h2>
-    <p>Kitchen · Living · Bedroom · Bathroom · Terrace</p>
+    <p>Kitchen · Living · Bedroom · Bathroom · Terrace · Parking</p>
     <div class="actions">
       <button class="btn" id="play-film-2" type="button"><svg viewBox="0 0 10 12" aria-hidden="true"><path d="M0 0l10 6-10 6z"/></svg>Watch the film again</button>
     </div>
@@ -322,6 +707,17 @@ footer { border-top: 1px solid var(--line); padding-block: 22px 32px; font-size:
   document.getElementById('play-film').addEventListener('click', playWithSound);
   document.getElementById('play-film-2').addEventListener('click', playWithSound);
   sound.addEventListener('click', function () { setSound(film.muted); if (film.paused) film.play(); });
+
+  // floor plan: highlight a room from the list
+  document.querySelectorAll('.schedule tr[data-room]').forEach(function (row) {
+    var shape = document.querySelector('.plan-svg [data-room="' + row.dataset.room + '"]');
+    if (!shape) return;
+    function on() { shape.classList.add('is-on'); row.classList.add('is-on'); }
+    function off() { shape.classList.remove('is-on'); row.classList.remove('is-on'); }
+    row.addEventListener('mouseenter', on); row.addEventListener('mouseleave', off);
+    row.addEventListener('focus', on); row.addEventListener('blur', off);
+    shape.addEventListener('mouseenter', on); shape.addEventListener('mouseleave', off);
+  });
 
   // only play room clips while they are on screen
   var clips = document.querySelectorAll('.room video, .detail video');
