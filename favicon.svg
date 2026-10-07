@@ -1,5 +1,17 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-  <rect width="64" height="64" rx="14" fill="#191816"/>
-  <path d="M20 50V30a12 12 0 0 1 24 0v20z" fill="#c99760"/>
-  <path d="M32 18v32M20 34h24" stroke="#191816" stroke-width="2.5" fill="none"/>
+  <rect width="64" height="64" rx="16" fill="#191816"/>
+  <g fill="#d9ab74">
+    <!-- stem -->
+    <path d="M21 15h8v34h-8z"/>
+    <!-- top arm with bracketed serif -->
+    <path d="M29 15h16q1.5 0 1.5 1.5V25h-2.6q-.4-5.2-3.4-6.6-1.6-.8-4.5-.8H29z"/>
+    <!-- bottom arm with bracketed serif -->
+    <path d="M29 49h17q1.5 0 1.5-1.5V39h-2.6q-.4 5.2-3.4 6.6-1.6.8-4.5.8H29z"/>
+    <!-- middle arm -->
+    <path d="M29 30.3h11q.9 0 .9 1.2t-.9 1.2H29z"/>
+    <path d="M39.6 28.4h2.4v6.2h-2.4z"/>
+    <!-- foot serifs on stem -->
+    <path d="M17.5 15H29v2.6H17.5z"/>
+    <path d="M17.5 46.4H29V49H17.5z"/>
+  </g>
 </svg>
